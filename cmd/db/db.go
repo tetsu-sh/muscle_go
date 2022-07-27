@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"domain/train"
+	"muscle_go/cmd/domain"
 
 	"github.com/jinzhu/gorm"
 )
@@ -17,5 +17,5 @@ func NewDB() *gorm.DB {
 }
 
 func AutoMigrate(db *gorm.DB) {
-	db.AutoMigrate(&train.Train)
+	db.AutoMigrate(&domain.Train{})
 }

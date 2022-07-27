@@ -1,18 +1,20 @@
 package main
 
 import (
+	"muscle_go/cmd/db"
+
+	"muscle_go/cmd/presentation"
+	"muscle_go/cmd/repository"
+
 	"github.com/labstack/echo/v4"
-	"github.com/muscle_go/db"
-	"github.com/muscle_go/presentation"
-	"github.com/muscle_go/repository"
 )
 
 func main() {
 	e := echo.New()
 
 	d := db.NewDB()
-	tr := repository.TrainRepository(d)
+	tr := repository.NewTrainRepository(d)
 	h := presentation.NewHandler(tr)
-	h.Register(&e)
+	h.Register(e)
 	e.Logger.Fatal(e.Start(":8000"))
 }

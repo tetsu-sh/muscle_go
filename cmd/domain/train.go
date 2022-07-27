@@ -15,11 +15,15 @@ type Train struct {
 	set    Set
 }
 
-func NewTrain(name string, date time.Time, volume int32, rep int32, set int32) (*Train, error) {
-	id, _ := uuid.NewUUID()
+func NewTrain(name string, date time.Time, volume int, rep int, set int) (*Train, error) {
+	uuid, err := uuid.NewUUID()
+	if err != nil {
+		return nil, err
+	}
+	id := uuid.String()
 	train := Train{
 		name:   TrainName(name),
-		id:     id,
+		id:     TrainId(id),
 		date:   date,
 		volume: Volume(volume),
 		rep:    Rep(rep),
@@ -29,8 +33,8 @@ func NewTrain(name string, date time.Time, volume int32, rep int32, set int32) (
 }
 
 type TrainRepository interface {
-	FetchById() Train
-	save(Train)
+	Save(t Train)
+	FetchById(ti TrainId) Train
 }
 
 type TrainName string
